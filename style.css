@@ -55,6 +55,7 @@ textarea{
 .future {
   background-color: #77dd77;
   color: white;
+  width: 200px;
 }
 
 .saveBtn {
