@@ -27,7 +27,7 @@ $(document).ready(function () {
 
 
         //set note field css based on time of day
-        dayTense = 13;
+    
         var dayShade = "present"
         if (dayTense > hourTitle) {
             dayShade = "past";
