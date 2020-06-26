@@ -2,8 +2,8 @@ var hourTitle;
 var amPm;
 var hourName = [""];
 var hourIndex = [""];
-var dayIndex = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-var monthIndex = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+var dayIndex = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+var monthIndex = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 let containBox = document.querySelector(".container");
 
 
@@ -16,7 +16,7 @@ $(document).ready(function () {
     var dateNum = d.getDate();
     var monthNum = d.getMonth();
     var weekNum = d.getDay();
-    var dateDisplay = dayIndex[weekNum]+", "+monthIndex[monthNum]+" "+dateNum;
+    var dateDisplay = dayIndex[weekNum] + ", " + monthIndex[monthNum] + " " + dateNum;
     console.log(dateDisplay);
     $("#currentDay").text(dateDisplay);
 
@@ -24,9 +24,10 @@ $(document).ready(function () {
 
         var hourTitle = i + 9;
         hourIndex[i] = parseFloat(hourTitle);
-        
+
 
         //set note field css based on time of day
+        dayTense = 13;
         var dayShade = "present"
         if (dayTense > hourTitle) {
             dayShade = "past";
@@ -42,23 +43,24 @@ $(document).ready(function () {
         }
         hourName[i] = String(hourTitle) + amPm;
 
+        
+
         var hourRow = document.createElement("div");
         $(hourRow).addClass("row time-block entryRow" + i);
         $(containBox).append(hourRow)
         var hourDisplay = document.createElement("div");
-        $(hourDisplay).addClass("hour col-md-20").text(hourName[i]);
+        $(hourDisplay).addClass("hour end-block").text(hourName[i]);
         $(hourRow).append(hourDisplay);
-        var bodyDisplay = document.createElement("div");
-
-
-        $(bodyDisplay).addClass(dayShade + " col-md-60").text("stuff");
+        var savedInfo = localStorage.getItem(i);
+        console.log(savedInfo);
+        var bodyDisplay = document.createElement("input");
+        $(bodyDisplay).attr("id","inputField"+i)
+        $(bodyDisplay).attr("placeholder",savedInfo);
+        $(bodyDisplay).addClass(dayShade + " mid-block").attr("type", "text");
         $(hourRow).append(bodyDisplay);
-        var btnDisplay = document.createElement("div");
-        $(btnDisplay).addClass("hour time-block col-md-20").text("stuff");
-        $(hourRow).append(btnDisplay);
         var saveIt = document.createElement("btn");
-        $(saveIt).addClass("saveBtn").text("stuff");
-        $(btnDisplay).append(saveIt);
+        $(saveIt).addClass("saveBtn end-block").attr("data-ind",i).text("SAVE");
+        $(hourRow).append(saveIt);
 
 
 
@@ -66,5 +68,13 @@ $(document).ready(function () {
         // console.log(amPm);
         // console.log(hourName[i]);
     }
+
+    $(document).on("click", ".saveBtn", function(){
+        var dataAtt = $(this).attr("data-ind");
+        var inField=$("#inputField"+dataAtt).val();
+        window.localStorage.setItem(dataAtt,inField);
+        console.log(dataAtt, inField);
+    })
+
 
 })
